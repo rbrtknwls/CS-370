@@ -1,0 +1,222 @@
+% <- percent signs are used to comment
+\documentclass[12pt]{article}
+
+%%%%%% PACKAGES - this part loads additional material for LaTeX %%%%%%%%%
+% Nearly anything you want can be done in LaTeX if you load the right package 
+% (search ctan.org or google it if you are looking for something).  We will load
+% here a few that we need for this document or that we expect you to need later.
+
+% The next 3 lines are needed to fix shortcomings of TeX that only make sense given its 40-year history ...
+% Simple keep and ignore.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{changepage}
+\usepackage{lipsum}
+\usepackage{caption}
+\usepackage{qtree}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage[section]{placeins}
+\usepackage{forest}
+% Custom margins (and paper sizes etc.) because LaTeX else wastes much space
+\usepackage[margin=1in]{geometry}
+
+% The following packages are created by the American Mathematical Society (AMS)
+% and provide lots of tools for special fonts, symbols, theorems, and proof
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+% mathtools contains many detail improvements over ams and core tex
+\usepackage{mathtools}
+
+% graphicx is required for images
+\usepackage{graphicx}
+\usetikzlibrary{positioning,chains,fit,shapes,calc, arrows}
+\newenvironment{amatrix}[1]{%
+  \left(\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right)
+}
+% enumitem used for customizing enumerations
+\usepackage[shortlabels]{enumitem}
+
+% tikz is the package used for drawing, in particular for drawing trees. You may also find simplified packages like tikz-qtree and forest useful
+\usepackage{tikz}
+\definecolor{myblue}{RGB}{80,80,160}
+\definecolor{mygreen}{RGB}{80,160,80}
+
+% hyperref allows links, urls, and many other PDF tricks.  We load it here
+%          in such a way that the PDF file has info about it
+\usepackage[%
+	pdftitle={CS370 Assignment 0},%
+	hidelinks,%
+]{hyperref}
+
+
+%%%%%% COMMANDS - here you can define your own LaTeX-commands %%%%%%%%%
+
+%%%%%% End of Preamble %%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+{\Large\textbf{CS370, Winter 2023}}\\
+\vspace{2mm}
+{\Large\textbf{Assignment 5: Question 6}}\\
+\vspace{3mm}
+\end{center}
+
+\begin{adjustwidth}{0em}{0pt}
+\textbf{Q5a)} Provide a solution to the system of equations \\\\
+A accurate solution to the system of equations is:
+\[ 
+\begin{bmatrix}
+4 & -4.2 & 0\\
+-2 & 2.099 & 7 \\
+4 & -1.7 & 4 \\
+\end{bmatrix}
+\begin{bmatrix}
+0 \\
+-1 \\
+1 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+4.2 \\
+4.901 \\
+5.7 \\
+\end{bmatrix}\]
+and so our solution is:
+\[ x_0 = 0, x_1 = -1, x_2 = 1\]
+\textbf{Q5b)} Provide a solution to the system of equations using Gaussian elimination with no row pivoting \\\\
+To begin we will start with the matrix:
+\[ 
+\begin{bmatrix}
+4 & -4.2 & 0\\
+-2 & 2.099 & 7 \\
+4 & -1.7 & 4 \\
+\end{bmatrix}, \begin{bmatrix}
+4.2 \\
+4.901 \\
+5.7 \\
+\end{bmatrix}\]
+We will then add 1/2(1) into (2):
+\[ 
+\begin{bmatrix}
+4 & -4.2 & 0\\
+0 & -0.001 & 7 \\
+4 & -1.7 & 4 \\
+\end{bmatrix}, \begin{bmatrix}
+4.2 \\
+7.001 \\
+5.7 \\
+\end{bmatrix}\]
+We will then subtract (1) into (3):
+\[ 
+\begin{bmatrix}
+4 & -4.2 & 0\\
+0 & -0.001 & 7 \\
+0 & 2.5 & 4 \\
+\end{bmatrix} =,
+\begin{bmatrix}
+4.2 \\
+7.001 \\
+1.5 \\
+\end{bmatrix}\]
+We will then add 2500(2) to (3):
+\[ 
+\begin{bmatrix}
+4 & -4.2 & 0\\
+0 & -0.001 & 7 \\
+0 & 0 & 17504 \\
+\end{bmatrix}, \begin{bmatrix}
+4.2 \\
+7.001 \\
+17503 (rounding down) \\
+\end{bmatrix}\]
+We can now use back substitution starting with solving $x_3$ which gives us:
+\[ 170504x_2 = 170503 \]
+\[ x_2 = 0.9999 \]
+Using this we thus get:
+\[ -0.001x_1 + 7(0.9999) = 7.001 \]
+\[ x_1 = -1.7\]
+We can finally get:
+\[ 4x_0 - 4.2(-1.7) = 4.2 \]
+\[ x_0 = -0.735\]
+Which is very far off from our original estimate as we have:
+\[ x_0 = -0.735, -1.7, 0.9999 \]
+
+\textbf{Q5b)} Provide a solution to the system of equations using Gaussian elimination with row pivoting \\\\
+To begin we will start with the matrix:
+\[ 
+\begin{bmatrix}
+4 & -4.2 & 0\\
+-2 & 2.099 & 7 \\
+4 & -1.7 & 4 \\
+\end{bmatrix}, \begin{bmatrix}
+4.2 \\
+4.901 \\
+5.7 \\
+\end{bmatrix}\]
+We will then switch (1) and (3):
+\[ 
+\begin{bmatrix}
+4 & -1.7 & 4 \\
+-2 & 2.099 & 7 \\
+4 & -4.2 & 0\\
+\end{bmatrix}, \begin{bmatrix}
+5.7 \\
+4.901 \\
+4.2 \\
+\end{bmatrix}\]
+We will add 1/2(1) to (2):
+\[ 
+\begin{bmatrix}
+4 & -1.7 & 4 \\
+0 & 1.249 & 9 \\
+4 & -4.2 & 0\\
+\end{bmatrix}, \begin{bmatrix}
+5.7 \\
+7.751 \\
+4.2 \\
+\end{bmatrix}\]
+We will then subtract (1) to (3):
+\[ 
+\begin{bmatrix}
+4 & -1.7 & 4 \\
+0 & 1.249 & 9 \\
+0 & -2.5 & -4\\
+\end{bmatrix}, \begin{bmatrix}
+5.7 \\
+7.751 \\
+-1.5 \\
+\end{bmatrix}\]
+We will then multiply by 2.0016 (2) to (3):
+\[ 
+\begin{bmatrix}
+4 & -1.7 & 4 \\
+0 & 1.249 & 9 \\
+0 & 0 & 14.014\\
+\end{bmatrix}, \begin{bmatrix}
+5.7 \\
+7.751 \\
+14.014 \\
+\end{bmatrix}\]
+Solving now we thus get:
+\[14.014x_2 = 14.014\]
+\[x_2 = 1\]
+Plugging this in to the next equation we get:
+\[ 1.249x_1 + 9 = 7.751\]
+\[ x_1 = -1 \]
+Lastly we get:
+\[ 4x_0 + 4.2 = 4.2 \]
+\[ x_0 = 0 \]
+Which is very similar to the accurate answer we had at the start.
+\textbf{Q5a)} Which system was more accurate \\\\
+In this case it would appear that system c is more accurate then system b, and by switching the rows we were able to avoid the rounding error!
+\end{adjustwidth}
+
+
+
+\end{document}

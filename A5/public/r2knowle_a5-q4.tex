@@ -1,0 +1,303 @@
+% <- percent signs are used to comment
+\documentclass[12pt]{article}
+
+%%%%%% PACKAGES - this part loads additional material for LaTeX %%%%%%%%%
+% Nearly anything you want can be done in LaTeX if you load the right package 
+% (search ctan.org or google it if you are looking for something).  We will load
+% here a few that we need for this document or that we expect you to need later.
+
+% The next 3 lines are needed to fix shortcomings of TeX that only make sense given its 40-year history ...
+% Simple keep and ignore.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{changepage}
+\usepackage{lipsum}
+\usepackage{caption}
+\usepackage{qtree}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage[section]{placeins}
+\usepackage{forest}
+% Custom margins (and paper sizes etc.) because LaTeX else wastes much space
+\usepackage[margin=1in]{geometry}
+
+% The following packages are created by the American Mathematical Society (AMS)
+% and provide lots of tools for special fonts, symbols, theorems, and proof
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+% mathtools contains many detail improvements over ams and core tex
+\usepackage{mathtools}
+
+% graphicx is required for images
+\usepackage{graphicx}
+\usetikzlibrary{positioning,chains,fit,shapes,calc, arrows}
+
+% enumitem used for customizing enumerations
+\usepackage[shortlabels]{enumitem}
+
+% tikz is the package used for drawing, in particular for drawing trees. You may also find simplified packages like tikz-qtree and forest useful
+\usepackage{tikz}
+\definecolor{myblue}{RGB}{80,80,160}
+\definecolor{mygreen}{RGB}{80,160,80}
+
+% hyperref allows links, urls, and many other PDF tricks.  We load it here
+%          in such a way that the PDF file has info about it
+\usepackage[%
+	pdftitle={CS370 Assignment 0},%
+	hidelinks,%
+]{hyperref}
+
+
+%%%%%% COMMANDS - here you can define your own LaTeX-commands %%%%%%%%%
+
+%%%%%% End of Preamble %%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+{\Large\textbf{CS370, Winter 2023}}\\
+\vspace{2mm}
+{\Large\textbf{Assignment 5: Question 4}}\\
+\vspace{3mm}
+\end{center}
+
+\begin{adjustwidth}{0em}{0pt}
+\textbf{Q4a)} Write the coefficient system matrix. \\\\
+We can convert the system of equations we are given to get:
+\[ 
+\begin{bmatrix}
+-24 & 12 & 36 & -12\\
+-12 & 30 & -30 & -18\\
+-12 & -2 & 40 & 22\\
+6 & -15 & 3 & 33
+\end{bmatrix}
+\begin{bmatrix}
+x_0 \\
+x_1 \\
+x_2 \\
+x_3 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+36 \\
+-18 \\
+18 \\
+-39
+\end{bmatrix}\]
+Where A is the left most matrix, and b is the right most vector.\\\\
+\textbf{Q4a)} Compute the LU factorization of A: \\\\
+To begin with we will combine A with the unit-diagonal matrix as they are equivalent:
+\[ 
+\begin{bmatrix}
+-24 & 12 & 36 & -12\\
+-12 & 30 & -30 & -18\\
+-12 & -2 & 40 & 22\\
+6 & -15 & 3 & 33
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+-24 & 12 & 36 & -12\\
+-12 & 30 & -30 & -18\\
+-12 & -2 & 40 & 22\\
+6 & -15 & 3 & 33
+\end{bmatrix}\]
+We will then subtract the second row by half of the first row:
+\[
+=
+\begin{bmatrix}
+1 & 0 & 0 & 0\\
+\frac{1}{2} & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+-24 & 12 & 36 & -12\\
+0 & 24 & -48 & -12\\
+-12 & -2 & 40 & 22\\
+6 & -15 & 3 & 33
+\end{bmatrix}\]
+We will then subtract the third row by half of the first row:
+\[
+=
+\begin{bmatrix}
+1 & 0 & 0 & 0\\
+\frac{1}{2} & 1 & 0 & 0\\
+\frac{1}{2} & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+-24 & 12 & 36 & -12\\
+0 & 24 & -48 & -12\\
+0 & -8 & 22 & 28\\
+6 & -15 & 3 & 33
+\end{bmatrix}\]
+We will then subtract the negative quarter of the first row to the fourth row:
+\[
+=
+\begin{bmatrix}
+1 & 0 & 0 & 0\\
+\frac{1}{2} & 1 & 0 & 0\\
+\frac{1}{2} & 0 & 1 & 0\\
+-\frac{1}{4} & 0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+-24 & 12 & 36 & -12\\
+0 & 24 & -48 & -12\\
+0 & -8 & 22 & 28\\
+0 & -12 & 12 & 30
+\end{bmatrix}\]
+We will then subtract a negative third of the first second to the third row:
+\[
+=
+\begin{bmatrix}
+1 & 0 & 0 & 0\\
+\frac{1}{2} & 1 & 0 & 0\\
+\frac{1}{2} & -\frac{1}{3} & 1 & 0\\
+-\frac{1}{4} & 0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+-24 & 12 & 36 & -12\\
+0 & 24 & -48 & -12\\
+0 & 0 & 6 & 24\\
+0 & -12 & 12 & 30
+\end{bmatrix}\]
+We will then subtract a negative half of the second row to the fourth row:
+\[
+=
+\begin{bmatrix}
+1 & 0 & 0 & 0\\
+\frac{1}{2} & 1 & 0 & 0\\
+\frac{1}{2} & -\frac{1}{3} & 1 & 0\\
+-\frac{1}{4} & -\frac{1}{2} & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+-24 & 12 & 36 & -12\\
+0 & 24 & -48 & -12\\
+0 & 0 & 6 & 24\\
+0 & 0 & -12 & 24
+\end{bmatrix}\]
+We will then subtract 2 times the third row from the fourth row:
+\[
+=
+\begin{bmatrix}
+1 & 0 & 0 & 0\\
+\frac{1}{2} & 1 & 0 & 0\\
+\frac{1}{2} & -\frac{1}{3} & 1 & 0\\
+-\frac{1}{4} & -\frac{1}{2} & -2 & 1
+\end{bmatrix}
+\begin{bmatrix}
+-24 & 12 & 36 & -12\\
+0 & 24 & -48 & -12\\
+0 & 0 & 6 & 24\\
+0 & 0 & 0 & 72
+\end{bmatrix}\]
+This gives us our L (lower triangular and unit diagonal) matrix on the left and our U (upper triangular) matrix on the right. Since we didnt need to do any swaps, P is still unit diagonal 
+\textbf{Q4a)} Solve the system using the LU factorization: \\\\
+Plugging LU into A we get:
+\[ 
+\begin{bmatrix}
+1 & 0 & 0 & 0\\
+\frac{1}{2} & 1 & 0 & 0\\
+\frac{1}{2} & -\frac{1}{3} & 1 & 0\\
+-\frac{1}{4} & -\frac{1}{2} & -2 & 1
+\end{bmatrix}
+\begin{bmatrix}
+-24 & 12 & 36 & -12\\
+0 & 24 & -48 & -12\\
+0 & 0 & 6 & 24\\
+0 & 0 & 0 & 72
+\end{bmatrix}
+\begin{bmatrix}
+x_0 \\
+x_1 \\
+x_2 \\
+x_3 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+36 \\
+-18 \\
+18 \\
+-39
+\end{bmatrix}\]
+Lets now assume that U*X = Y, such that:
+\[ 
+\begin{bmatrix}
+-24 & 12 & 36 & -12\\
+0 & 24 & -48 & -12\\
+0 & 0 & 6 & 24\\
+0 & 0 & 0 & 72
+\end{bmatrix}
+\begin{bmatrix}
+x_0 \\
+x_1 \\
+x_2 \\
+x_3 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+y_1 \\
+y_2 \\
+y_3 \\
+y_4
+\end{bmatrix}\]
+Plugging this back into our equation we get:
+\[ 
+\begin{bmatrix}
+1 & 0 & 0 & 0\\
+\frac{1}{2} & 1 & 0 & 0\\
+\frac{1}{2} & -\frac{1}{3} & 1 & 0\\
+-\frac{1}{4} & -\frac{1}{2} & -2 & 1
+\end{bmatrix}
+\begin{bmatrix}
+y_0 \\
+y_1 \\
+y_2 \\
+y_3 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+36 \\
+-18 \\
+18 \\
+-39
+\end{bmatrix}\]
+Solving this, by expanding out the system of equations we then get
+\[ y_0 = 36, y_1 = -36, y_2 = -12, y_3 = -72 \]
+Plugging this back into our equation for Y we then get:
+\[ 
+\begin{bmatrix}
+-24 & 12 & 36 & -12\\
+0 & 24 & -48 & -12\\
+0 & 0 & 6 & 24\\
+0 & 0 & 0 & 72
+\end{bmatrix}
+\begin{bmatrix}
+x_0 \\
+x_1 \\
+x_2 \\
+x_3 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+36 \\
+-36 \\
+-12 \\
+-72
+\end{bmatrix}\]
+Solving this directly again gives us the following values for x:
+\[ x_0 = 3, x_1 = 2, x_2 = 2, x_3 = -1 \]
+As required!
+\end{adjustwidth}
+
+
+
+\end{document}

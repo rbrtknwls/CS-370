@@ -1,0 +1,124 @@
+% <- percent signs are used to comment
+\documentclass[12pt]{article}
+
+%%%%%% PACKAGES - this part loads additional material for LaTeX %%%%%%%%%
+% Nearly anything you want can be done in LaTeX if you load the right package 
+% (search ctan.org or google it if you are looking for something).  We will load
+% here a few that we need for this document or that we expect you to need later.
+
+% The next 3 lines are needed to fix shortcomings of TeX that only make sense given its 40-year history ...
+% Simple keep and ignore.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{changepage}
+\usepackage{lipsum}
+\usepackage{caption}
+\usepackage{qtree}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage[section]{placeins}
+% Custom margins (and paper sizes etc.) because LaTeX else wastes much space
+\usepackage[margin=1in]{geometry}
+
+% The following packages are created by the American Mathematical Society (AMS)
+% and provide lots of tools for special fonts, symbols, theorems, and proof
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+% mathtools contains many detail improvements over ams and core tex
+\usepackage{mathtools}
+
+% graphicx is required for images
+\usepackage{graphicx}
+
+% enumitem used for customizing enumerations
+\usepackage[shortlabels]{enumitem}
+
+% tikz is the package used for drawing, in particular for drawing trees. You may also find simplified packages like tikz-qtree and forest useful
+\usepackage{tikz}
+
+% hyperref allows links, urls, and many other PDF tricks.  We load it here
+%          in such a way that the PDF file has info about it
+\usepackage[%
+	pdftitle={CS240 Assignment 0},%
+	hidelinks,%
+]{hyperref}
+
+
+%%%%%% COMMANDS - here you can define your own LaTeX-commands %%%%%%%%%
+
+%%%%%% End of Preamble %%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+{\Large\textbf{CS370, Winter 2023}}\\
+\vspace{2mm}
+{\Large\textbf{Assignment 2: Question 2}}\\
+\vspace{3mm}
+\end{center}
+
+\begin{adjustwidth}{0em}{0pt}
+
+\section*{(1) Do two Euler steps for the following IVP:}
+To be being we will define the following variables,$z_1 = x$, $z_2 = y$. From these we can derive that:
+\begin{align*}
+   \frac{dz_1(t)}{dt} &= 4z_1 - 2z_2 + t \\\\
+   \frac{dz_2(t)}{dt} &= 3z_1 + 5t 
+\end{align*}
+We can then derive $f$ by doing the following:
+\[ f(t,z) = \frac{d}{dt} \begin{bmatrix}
+z_1\\
+z_2
+\end{bmatrix} =
+\begin{bmatrix}
+4z_1 - 2z_2 + t\\
+3z_1 + 5t 
+\end{bmatrix} \]
+Solving for $t = 1.2$ (first step) gives us:
+\begin{align*} 
+	Z^{(1)} &= Z^{(0)} + hf(t_0, Z^{(0)}) \\
+	        &= \begin{bmatrix}
+1\\
+1
+\end{bmatrix} + 0.2\begin{bmatrix}
+4(1) - 2(1) + 1\\
+3(1) + 5(1) 
+\end{bmatrix} \\
+	        &= \begin{bmatrix}
+1\\
+1
+\end{bmatrix} + 0.2\begin{bmatrix}
+3\\
+8 
+\end{bmatrix} \\
+	        &= \begin{bmatrix}
+1.6\\
+2.6
+\end{bmatrix}
+\end{align*}
+Solving now for $t = 1.4$ (second step) gives us:
+\begin{align*} 
+	Z^{(2)} &= Z^{(1)} + hf(t_0, Z^{(1)}) \\
+	        &= \begin{bmatrix}
+1.6\\
+2.6
+\end{bmatrix} + 0.2\begin{bmatrix}
+4(1.6) - 2(2.6) + 1.2\\
+3(1.6) + 5(1.2) 
+\end{bmatrix} \\
+	        &= \begin{bmatrix}
+1.6\\
+2.6
+\end{bmatrix} + 0.2\begin{bmatrix}
+2.4\\
+10.8
+\end{bmatrix} \\
+	        &= \begin{bmatrix}
+2.08\\
+4.76
+\end{bmatrix}
+\end{align*}
+\end{adjustwidth}
+\end{document}

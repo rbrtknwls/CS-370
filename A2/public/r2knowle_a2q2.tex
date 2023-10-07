@@ -1,0 +1,138 @@
+% <- percent signs are used to comment
+\documentclass[12pt]{article}
+
+%%%%%% PACKAGES - this part loads additional material for LaTeX %%%%%%%%%
+% Nearly anything you want can be done in LaTeX if you load the right package 
+% (search ctan.org or google it if you are looking for something).  We will load
+% here a few that we need for this document or that we expect you to need later.
+
+% The next 3 lines are needed to fix shortcomings of TeX that only make sense given its 40-year history ...
+% Simple keep and ignore.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{changepage}
+\usepackage{lipsum}
+\usepackage{caption}
+\usepackage{qtree}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage[section]{placeins}
+% Custom margins (and paper sizes etc.) because LaTeX else wastes much space
+\usepackage[margin=1in]{geometry}
+
+% The following packages are created by the American Mathematical Society (AMS)
+% and provide lots of tools for special fonts, symbols, theorems, and proof
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+% mathtools contains many detail improvements over ams and core tex
+\usepackage{mathtools}
+
+% graphicx is required for images
+\usepackage{graphicx}
+
+% enumitem used for customizing enumerations
+\usepackage[shortlabels]{enumitem}
+
+% tikz is the package used for drawing, in particular for drawing trees. You may also find simplified packages like tikz-qtree and forest useful
+\usepackage{tikz}
+
+% hyperref allows links, urls, and many other PDF tricks.  We load it here
+%          in such a way that the PDF file has info about it
+\usepackage[%
+	pdftitle={CS240 Assignment 0},%
+	hidelinks,%
+]{hyperref}
+
+
+%%%%%% COMMANDS - here you can define your own LaTeX-commands %%%%%%%%%
+
+%%%%%% End of Preamble %%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+{\Large\textbf{CS370, Winter 2023}}\\
+\vspace{2mm}
+{\Large\textbf{Assignment 2: Question 2}}\\
+\vspace{3mm}
+\end{center}
+
+\begin{adjustwidth}{0em}{0pt}
+
+\section*{(a) Finding the conditionals for a,b,c,e,f,g}
+We are told that our piecewise function must pass through (1,2), (2,1), (3,1). To begin we will solve for a,e b by plugging points into certain functions. Lets use (1,2) and plug it into S(x):
+\begin{align*}
+   \text{S(1)} &= a + b(x-1) + c(x-1)^2 + \frac{1}{4}(x-1)^2(x-2) \\
+             2 &= a + b((1)-1) + c((1)-1)^2 + \frac{1}{4}((1)-1)^2((1)-2)) \\
+             2 &= a \\
+             a &= 2 
+\end{align*}
+Plugging (2,1) into a equation for S(x) we then get:
+\begin{align*}
+   \text{S(2)} &= e + f(x-2) + g(x-2)^2 - \frac{1}{4}(x-2)^2(x-3) \\
+             1 &= e + f((2)-2) + g((2)-2)^2 - \frac{1}{4}((2)-2)^2((2)-3) \\
+             1 &= e \\
+             e &= 1 
+\end{align*}
+If we plug (2,1) into the other equation for S(x) it tells us the conditions for the other variables:
+\begin{align*}
+   \text{S(2)} &= a + b(x-1) + c(x-1)^2 + \frac{1}{4}(x-1)^2(x-2) \\
+             1 &= a + b((2)-1) + c((2)-1)^2 + \frac{1}{4}((2)-1)^2((2)-2)) \\
+             1 &= a + b + c \\
+             b + c &= -1
+\end{align*}
+If we plug (3,1) into the equation for S(x) we get:
+\begin{align*}
+   \text{S(3)} &= e + f(x-2) + g(x-2)^2 - \frac{1}{4}(x-2)^2(x-3) \\
+             1 &= e + f((3)-2) + g((3)-2)^2 - \frac{1}{4}((3)-2)^2((3)-3) \\
+             1 &= e + f + g \\
+             f + g &= 0
+\end{align*}
+Which gives us the conditions for b,c,f,g and the exact values for a and e.
+\section*{(b) Find condition of coefficients such that S'(2) is 0}
+In order for equation to be continuous both equations for S'(2) must be equal. This implies that we have the following:
+\begin{align*}
+   \text{S'(2)} &= \text{S'(2)} \\
+             \frac{dS}{dx} (a + b(x-1) + c(x-1)^2 + \frac{1}{4}(x-1)^2(x-2)) &= \frac{dS}{dx} (e + f(x-2) + g(x-2)^2 - \frac{1}{4}(x-2)^2(x-3)) \\
+             b + 2c(x-1) + \frac{(x-1)(3x-5)}{4} &= f + 2g(x-2) - \frac{(x-2)(3x-8)}{4}) \\
+             b + 2c((2)-1) + \frac{((2)-1)(3(2)-5)}{4} &= f + 2g((2)-2) - \frac{((2)-2)(3(2)-8)}{4}) \\
+             b + 2c + \frac{1}{4} &= f \\
+             b + 2c - f &= -\frac{1}{4} \\
+\end{align*}
+\section*{(c) Enforce the boundary conditions and solve for c,g}
+To begin with we are told that the second derivative of S(1) and S(3) is 0. To get an equation for c we will then rewrite this as:
+\begin{align*}
+   \text{S(1)} &= \frac{d^2S}{d^2x} (a + b(x-1) + c(x-1)^2 + \frac{1}{4}(x-1)^2(x-2)) \\
+             0 &= 2c + \frac{3x - 4}{2} \\
+             0 &= 2c + \frac{3(1) - 4}{2} \\
+             0 &= 2c - \frac{1}{2} \\
+             c &= \frac{1}{4} \\\\
+    \text{S(3)} &= \frac{d^2S}{d^2x} (e + f(x-2) + g(x-2)^2 - \frac{1}{4}(x-2)^2(x-3)) \\
+             0 &= g - \frac{3x - 7}{2} \\
+             0 &= g - \frac{3(3) - 7}{2} \\
+             0 &= g - 1 \\
+             g &= \frac{1}{2}
+\end{align*}
+Which proves the coefficients values as necessary. 
+
+
+
+\section*{(d) Compute the values of b and f}
+Now that we have the values for g and c from (c), we can plug it into the following equations:
+\begin{align*}
+   b + c &= -1 \\
+             b + \frac{1}{4} &= -1 \\
+             b  &= -\frac{5}{4} \\\\
+   f + g &= 0 \\
+             f + \frac{1}{2} &= 0 \\
+             f  &= -\frac{1}{2} \\
+\end{align*}
+Thus we have have solved for both f and b.
+
+\section*{(e) What conditions are needed for a cubic spline}
+We need to check that S''(x) is continuous when x = 2.
+\end{adjustwidth}
+
+\end{document}
